@@ -2,14 +2,15 @@ import basket_icon from './basket_icon.png'
 import logo from './logo.png'
 import header_img from './header_img.png'
 import search_icon from './search_icon.png'
-import menu_1 from './menu_1.png'
-import menu_2 from './menu_2.png'
-import menu_3 from './menu_3.png'
-import menu_4 from './menu_4.png'
-import menu_5 from './menu_5.png'
-import menu_6 from './menu_6.png'
-import menu_7 from './menu_7.png'
-import menu_8 from './menu_8.png'
+import apple from './4ade3729109e48e14e0e3126f49df099.jpg';
+import banana from './banana.jpg';
+import butter from './butter.webp';
+import broccoli from './d315f4991c4c3af017e99bf7d94efa0b.jpg';
+import almond from './almond.jpg';
+import rice from './rice.png';
+import strawberry from './strawberry.jpg';
+import spinach from './Untitled.jpg';
+
 
 import food_1 from './food_1.png'
 import food_2 from './food_2.png'
@@ -84,37 +85,26 @@ export const assets = {
 
 export const menu_list = [
     {
-        menu_name: "Salad",
-        menu_image: menu_1
+        menu_name: "Fruits",
+        menu_image: apple
     },
     {
-        menu_name: "Rolls",
-        menu_image: menu_2
+        menu_name: "Vegetables",
+        menu_image: broccoli
     },
     {
-        menu_name: "Deserts",
-        menu_image: menu_3
+        menu_name: "Dairy Products",
+        menu_image: butter
     },
     {
-        menu_name: "Sandwich",
-        menu_image: menu_4
+        menu_name: "Cereals and Pulses",
+        menu_image: rice
     },
     {
-        menu_name: "Cake",
-        menu_image: menu_5
-    },
-    {
-        menu_name: "Pure Veg",
-        menu_image: menu_6
-    },
-    {
-        menu_name: "Pasta",
-        menu_image: menu_7
-    },
-    {
-        menu_name: "Noodles",
-        menu_image: menu_8
-    }]
+        menu_name: "Dry Fruits",
+        menu_image: almond
+    }
+]
 
 export const food_list = [
     {
