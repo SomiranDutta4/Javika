@@ -8,12 +8,13 @@ import AppDownload from '../../components/AppDownload/AppDownload'
 const Home = () => {
 
     const [category,setCategory] = useState("All");
+    const [isCategorySet,setCatset]=useState(false)
     
   return (
     <div>
         <Header/>
-        <ExploreMenu category={category} setCategory={setCategory}/>
-        <FoodDisplay category={category}/>
+        <ExploreMenu isCategorySet={isCategorySet} category={category} setCategory={setCategory}/>
+        <FoodDisplay category={category} isCategorySet={isCategorySet} setCatset={setCatset}/>
         <AppDownload/>
     </div>
   )

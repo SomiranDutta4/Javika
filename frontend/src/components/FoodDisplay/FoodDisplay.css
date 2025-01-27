@@ -1,4 +1,4 @@
-.food-display{
+/* .food-display{
     margin-top: 30px;
 }
 
@@ -12,13 +12,15 @@
     margin-top: 30px;
     gap: 30px;
     row-gap: 50px;
+} */
+.spanItems-details{
+    margin-right: 4px;
+    padding:2px 0px 2px 0;
 }
-
-:root .h2we {
+/* :root .h2we {
     color: white; 
 }
 
-/* Remove filter from h2 elements in lightcolors theme */
 .lightcolors .h2we {
     color: black
-}
+} */
