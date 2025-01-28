@@ -11,6 +11,8 @@ const StoreContextProvider = (props) => {
     const [food_list,setFoodList] = useState([])
     const [foodItem,setFoodItem]=useState({})
     const [BuyPage,setBuyPage]=useState(false)
+    const [filterFood,setFilterFood]=useState(null);
+    const [filterCat,setFilterCat]=useState(null)
 
 
     const addToCart = async (itemId) => {
@@ -80,7 +82,9 @@ const StoreContextProvider = (props) => {
         foodItem,
         setFoodItem,
         BuyPage,
-        setBuyPage
+        setBuyPage,
+        filterFood,setFilterFood,
+        filterCat,setFilterCat
     }
 
     return (

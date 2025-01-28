@@ -10,13 +10,26 @@ import Divider from '@mui/material/Divider';
 
 
 
-function FoodItem({ id, name, price, description, image }) {
+function FoodItem({ }) {
   const { cartItems, addToCart, removeFromCart, url } = useContext(StoreContext);
   const { foodItem, setFoodItem, setBuyPage } = useContext(StoreContext);
   const [count, setCount] = useState(10);
 
+  const [addCount, setAddCount] = useState(1)
+  const [isAdding, setisAdding] = useState(false)
+
   const handleCount = (event) => {
     setCount(event.target.value)
+  }
+  const addIteminc = () => {
+    setAddCount(addCount + 1);
+  }
+  const decreaseCountAdd = () => {
+    if (addCount - 1 == 0) {
+      setisAdding(false);
+      return;
+    }
+    setAddCount(addCount - 1)
   }
 
   const handleBackToMainPag = () => {
@@ -59,9 +72,18 @@ function FoodItem({ id, name, price, description, image }) {
                   </Typography>
                 </Box>
                 {/* <MenuItem > */}
-                <Button variant='contained'>Add
-                  {/* <ShoppingCartIcon></ShoppingCartIcon> */}
-                </Button>
+                <Box>
+                  <Button onClick={()=>{setisAdding(true)}} variant='outlined'>Add
+                    {/* <ShoppingCartIcon></ShoppingCartIcon> */}
+                  </Button>
+                  {isAdding &&
+                    <>
+                      <button onClick={decreaseCountAdd}>-</button>
+                      <span>{addCount}</span>
+                      <button onClick={addIteminc}>+</button>
+                    </>
+                  }
+                </Box>
               </Box>
 
             </Box>
