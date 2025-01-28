@@ -13,12 +13,13 @@ import MyOrders from './pages/MyOrders/MyOrders'
 const App = () => {
 
   const [showLogin,setShowLogin] = useState(false)
+  const [showLoginSeller,setShowLoginSeller]=useState(false)
 
   return (
     <>
-    {showLogin?<LoginPopup setShowLogin={setShowLogin}/>:<></>}
+    {(showLogin||showLoginSeller)? <LoginPopup setShowLogin={setShowLogin} showLoginSeller={showLoginSeller} setShowLoginSeller={setShowLoginSeller}/>:<></>}
     <div className='app'>
-        <Navbar setShowLogin={setShowLogin}  />
+        <Navbar setShowLoginSeller={setShowLoginSeller} setShowLogin={setShowLogin} />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/cart' element={<Cart />} />
