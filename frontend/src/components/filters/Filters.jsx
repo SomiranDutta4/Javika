@@ -1,4 +1,3 @@
-import { height } from '@fortawesome/free-solid-svg-icons/fa0'
 import { Box, Divider, ListItem, ListItemButton, ListItemText } from '@mui/material'
 import React, { useState } from 'react'
 import SideFilters from './SideFilters'
