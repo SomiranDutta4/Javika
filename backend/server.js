@@ -17,7 +17,6 @@ const port = 4000;
 app.use(express.json());
 app.use(cors());
 
-// createFood();
 // API Endpoints
 app.use("/api/food", foodRouter);
 app.use("/images", express.static("uploads"));

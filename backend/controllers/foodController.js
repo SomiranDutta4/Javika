@@ -22,18 +22,38 @@ import Farmer from '../models/farmerModel.js'
 // }
 
 const addFood = async (req, res) => {
-    console.log(req.body);
     try {
         const { name, price, category, units, farmer } = req.body;
 
-        const foundFarmer = await Farmer.findOne({ email: farmer.email });
+        const foundFarmer = await Farmer.findById(farmer._id);
         if (!foundFarmer) {
             return res.status(404).json({ success: false, message: "Farmer not found." });
         }
 
         let food = await foodModel.findOne({ name, category });
-
         if (food) {
+            const productIndex = foundFarmer.products.findIndex(product => product.foodId.toString() === food._id.toString());
+
+            if (productIndex !== -1) {
+                foundFarmer.products[productIndex].units += units; // Adding units
+                foundFarmer.products[productIndex].price = price; // Updating price
+
+                // Save the updated farmer document
+                await foundFarmer.save();
+
+                // return res.status(200).json({ message: 'Product updated successfully' });
+            } else {
+                // If food doesn't exist in the farmer's products, add it
+                foundFarmer.products.push({
+                    foodId: food._id,
+                    units: units,
+                    price: price,
+                    category: category,
+                    name: food.name,
+                });
+                await foundFarmer.save();
+            }
+
             let priceEntry = food.prices.find(entry => entry.soldBy.toString() === foundFarmer._id.toString());
 
             if (priceEntry) {
@@ -47,7 +67,6 @@ const addFood = async (req, res) => {
 
             await food.save();
         } else {
-            // If food doesn't exist, create a new entry
             food = new foodModel({
                 name,
                 category,
@@ -128,34 +147,34 @@ const listFood = async (req, res) => {
 // }
 
 const removeFood = async (req, res) => {
-    console.log(req.body)
     try {
-        const { id, farmerId } = req.body;
+        const id = req.body.id;
+        const farmerId = req.body.farmer._id;
 
         // Find the food item by ID
         const food = await foodModel.findById(id);
         if (!food) {
             return res.status(404).json({ success: false, message: "Food not found." });
         }
-        
+        const farmer = await Farmer.findById(req.body.farmer._id);
+        const updatedFarmer = await Farmer.findByIdAndUpdate(
+            farmer._id,
+            { $pull: { products: { foodId: id } } },
+            { new: true } // This option returns the updated farmer
+        );
+        const newProducts=updatedFarmer.products
 
-        // // Find if the farmer exists in the prices array and remove the farmerId
-        // const updatedPrices = food.prices.filter(price => price.soldBy.toString() !== farmerId);
+        // Find if the farmer exists in the prices array and remove the farmerId
+        const updatedPrices = food.prices.filter(price => price.soldBy.toString() !== farmerId);
 
-        // // If the prices array has changed, update it
-        // if (updatedPrices.length !== food.prices.length) {
-        //     food.prices = updatedPrices;
-        //     await food.save();
-        // }
+        // If the prices array has changed, update it
+        if (updatedPrices.length !== food.prices.length) {
+            food.prices = updatedPrices;
+            await food.save();
+        }
 
-        // // If no farmers remain selling the food, delete the food item
-        // if (food.prices.length === 0) {
-        //     fs.unlink(`uploads/${food.image}`, () => { }); // Remove the image file
-        //     await foodModel.findByIdAndDelete(id);
-        //     return res.json({ success: true, message: "Food completely removed" });
-        // }
 
-        // return res.json({ success: true, message: "Farmer removed from food item" });
+        return res.json({ success: true, message: "Farmer removed from food item" ,newProducts});
 
     } catch (error) {
         console.error(error);

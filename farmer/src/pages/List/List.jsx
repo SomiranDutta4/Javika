@@ -5,18 +5,16 @@ import { toast } from "react-toastify"
 import { StoreContext } from '../../context/StoreContext'
 
 const List = ({ url }) => {
-  const{farmer}=useContext(StoreContext)
+  const { farmer, food, setFood } = useContext(StoreContext)
 
   const [list, setList] = useState([]);
 
   const fetchList = async () => {
-    const response = await axios.get(`${url}/api/food/list`);
-    if (response.data.success) {
-      setList(response.data.data)
-    }
-    else {
-      toast.error("Error")
-    }
+    // const newUrl = `${url}/api/farmer/foods/All`;
+    const newUrl = `${url}/api/farmer/products/All`;
+    const response = await axios.put(newUrl,farmer);
+    setList(response.data);
+    // console.log(response.data)
   }
 
   // const removeFood = async(foodId) => {
@@ -29,6 +27,7 @@ const List = ({ url }) => {
   //     toast.error("Error")
   //   }
   // }
+
   const removeFood = async (foodId) => {
     if (!farmer) {
       toast.error('Farmer not found');
@@ -40,16 +39,27 @@ const List = ({ url }) => {
     await fetchList();
 
     if (response.data.success) {
+      setList(response.data.newProducts)
       toast.success(response.data.message);
     } else {
       toast.error('Error');
     }
   };
+  const findMyLists = () => {
+    const filteredList = food.filter(item =>
+      item.prices.some(price => price.soldBy.toString() === farmer._id)
+    );
+    setList(filteredList);
+  }
 
 
   useEffect(() => {
     fetchList();
   }, [])
+
+  useEffect(() => {
+    findMyLists()
+  }, [food])
 
   // return (
   //   <div className='list add flex-col'>
@@ -93,7 +103,7 @@ const List = ({ url }) => {
             <p>{item.name}</p>
             <p>{item.category}</p>
             <p>${item.price}</p>
-            <p onClick={() => removeFood(item._id)} className="cursor">X</p>
+            <p onClick={() => removeFood(item.foodId)} className="cursor">X</p>
           </div>
         ))}
       </div>

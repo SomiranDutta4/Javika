@@ -48,6 +48,11 @@ const createFarmer = async function(req, res) {
         return res.status(500).json({ success: false, message: "Something went wrong. Please try again." });
     }
 };
+
+const getFarmerFoods=async function(req,res){
+    const farmer=await Farmer.findOne({_id:req.body._id});
+    return res.status(200).json(farmer.products)
+}
 // const createFarmer = async function(req, res) {
 //     try {
 //         const { name, email, password, aadhaar, location, panNumber } = req.body;
@@ -95,7 +100,6 @@ const createFarmer = async function(req, res) {
 
 
 const loginFarmer = async function (req, res) {
-    console.log(req.body)
     try {
         const { email, password, farmerId } = req.body;
 
@@ -120,6 +124,7 @@ const loginFarmer = async function (req, res) {
         res.status(200).json({
             message: "Login successful!",
             farmer: {
+                _id:farmer._id,
                 name: farmer.name,
                 farmerId: farmer.farmerId,
                 email: farmer.email,
@@ -133,4 +138,4 @@ const loginFarmer = async function (req, res) {
 };
 
 
-export { loginFarmer, createFarmer, findAllFood }
+export { loginFarmer, createFarmer, findAllFood ,getFarmerFoods}
