@@ -6,9 +6,11 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import SortIcon from '@mui/icons-material/Sort';
 import { StoreContext } from '../../context/StoreContext';
 import Filters from '../filters/Filters';
+import axios from 'axios';
 
 const FoodDisplay = ({ category, isCategorySet, setCatset }) => {
   const { filterFood, filterCat, food_list } = useContext(StoreContext)
+  const Cartapi='http://localhost:4000/api/cart/add'
 
   const [count, setcount] = useState(1)
   // filteredResults
@@ -22,6 +24,8 @@ const FoodDisplay = ({ category, isCategorySet, setCatset }) => {
     setFoodItem(item)
   }
   const countInc = () => {
+
+    // axios.post
     //fetch and add to cart
     setcount(count + 1);
   }
