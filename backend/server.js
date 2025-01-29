@@ -1,40 +1,42 @@
-import express from "express"
-import cors from "cors"
-// import { connectDB } from "./config/db.js"
-import foodRouter from "./routes/foodRoute.js"
-import userRouter from "./routes/userRoute.js"
-import 'dotenv/config'
-import cartRouter from "./routes/cartRoute.js"
-import orderRouter from "./routes/orderRoute.js"
-import './config/db.js'
+import express from "express";
+import cors from "cors";
+import { connectDB } from "./config/db.js";
+import foodRouter from "./routes/foodRoute.js";
+import userRouter from "./routes/userRoute.js";
+import "dotenv/config";
+import cartRouter from "./routes/cartRoute.js";
+import orderRouter from "./routes/orderRoute.js";
+import {adminRouter} from "./admin-panel/admin-comfig.js";
+import farmerRoute from "./routes/farmers.js";
 
-// app config
-const app = express()
-const port = 4000
+// App configuration
+const app = express();
+const port = 4000;
 
-// middleware
-app.use(express.json())
-app.use(cors())
+// Middleware
+app.use(express.json());
+app.use(cors());
 
-// db connection
-// connectDB();
+// createFood();
+// API Endpoints
+app.use("/api/food", foodRouter);
+app.use("/images", express.static("uploads"));
+app.use("/api/user", userRouter);
+app.use("/api/cart", cartRouter);
+app.use("/api/order", orderRouter);
+app.use("/api/farmer", farmerRoute);
+app.use("/api/v1/", adminRouter);
 
-// api endpoints
-app.use("/api/food",foodRouter)
-app.use("/images",express.static('uploads'))
-app.use("/api/user",userRouter)
-app.use("/api/cart",cartRouter)
-app.use("/api/order",orderRouter)
+// Root Endpoint
+app.get("/", (req, res) => {
+  res.send("API Working");
+});
 
-// app.use('/api/farmer,')
-
-
-app.get("/",(req,res)=>{
-    res.send("API Working")
-})
-
-app.listen(port,()=>{
-    console.log(`Server Started on http://localhost:${port}`)
-})
-
-// YOU CAN SAVE UR DATABASE IN THIS COMMENT IF U WANT --> 
+// Connect to Database and Start Server
+connectDB().then(() => {
+  app.listen(port, () => {
+    console.log(`Server Started on http://localhost:${port}`);
+  });
+}).catch((error) => {
+  console.error("Failed to start server due to database connection error:", error);
+});

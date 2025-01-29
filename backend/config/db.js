@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-mongoose.connect('mongodb://localhost:27017/Startup');
+mongoose.connect('mongodb://localhost/Startup');
 const db=mongoose.connection;
 
 db.on('error',console.error.bind(console,"error setting up database"));
