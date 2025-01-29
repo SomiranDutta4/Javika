@@ -33,6 +33,7 @@ const createToken = (id) => {
 
 // register user
 const registerUser = async (req,res) => {
+    console.log(req.body);
     const {name,password,email} = req.body;
     try {
         //checking if user already exists
@@ -40,7 +41,7 @@ const registerUser = async (req,res) => {
         if (exists){
             return res.json({success:false,message:"User already exists."})
         }
-
+        
         // validating email format & strong password
         if (!validator.isEmail(email)){
             return res.json({success:false,message:"Please enter a valid email."})
@@ -60,9 +61,10 @@ const registerUser = async (req,res) => {
             email:email,
             password:hashedPassword
         })
-
+        console.log(newUser);
         const user = await newUser.save()
         const token = createToken(user._id)
+        console.log(user);
         res.json({success:true,token});
     } catch (error) {
         console.log(error);
