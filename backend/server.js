@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { connectDB } from "./config/db.js";
+// import { connectDB } from "./config/db.js";
 import foodRouter from "./routes/foodRoute.js";
 import userRouter from "./routes/userRoute.js";
 import "dotenv/config";
@@ -8,6 +8,7 @@ import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
 import {adminRouter} from "./admin-panel/admin-comfig.js";
 import farmerRoute from "./routes/farmers.js";
+import './config/db.js'
 
 // App configuration
 const app = express();
@@ -32,10 +33,10 @@ app.get("/", (req, res) => {
 });
 
 // Connect to Database and Start Server
-connectDB().then(() => {
+// then(() => {
   app.listen(port, () => {
     console.log(`Server Started on http://localhost:${port}`);
   });
-}).catch((error) => {
-  console.error("Failed to start server due to database connection error:", error);
-});
+// }).catch((error) => {
+  // console.error("Failed to start server due to database connection error:", error);
+// });
