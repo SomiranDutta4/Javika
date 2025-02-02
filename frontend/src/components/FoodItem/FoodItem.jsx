@@ -1,42 +1,126 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import './FoodItem.css'
 import { assets } from '../../assets/assets'
 import { useState } from 'react'
 import { StoreContext } from '../../context/StoreContext'
-import { Box, Button, Card, Container, Grid, Grid2, MenuItem, Paper, Select, Stack, Typography,Radio, RadioGroup, FormControlLabel } from '@mui/material'
+import { Box, Button, Card, Container, Grid, Grid2, MenuItem, Paper, Select, Stack, Typography, Radio, RadioGroup, FormControlLabel } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Divider from '@mui/material/Divider';
-import dummyFarmers from '../../dummyData/dummyFarmers'
+// import dummyFarmers from '../../dummyData/dummyFarmers'
+import axios from 'axios'
 
 
 
-function FoodItem({ }) {
-  const { cartItems, addToCart, removeFromCart, url } = useContext(StoreContext);
-  const { foodItem, setFoodItem, setBuyPage } = useContext(StoreContext);
-  const [count, setCount] = useState(10);
+function FoodItem() {
+  const { cartItems, addToCart, removeFromCart, foodItem, setFoodItem, url, user } = useContext(StoreContext);
+
+  // const { } = useContext(StoreContext);
+  // const [count, setCount] = useState(10);
 
   const [addCount, setAddCount] = useState(1)
   const [isAdding, setisAdding] = useState(false)
+  const [currPrice, setPrice] = useState(null);
+  const [selectedItem, setSelected] = useState({})
+  const [farmers, setFarmers] = useState({})
+  // const handleCount = (event) => {
+  // setCount(event.target.value)
+  // }
 
-  const handleCount = (event) => {
-    setCount(event.target.value)
-  }
-  const addIteminc = () => {
-    setAddCount(addCount + 1);
-  }
-  const decreaseCountAdd = () => {
-    if (addCount - 1 == 0) {
-      setisAdding(false);
+
+  const addIteminc = async () => {
+    if (!selectedItem || Object.keys(selectedItem).length === 0) {
+      alert("Please select a seller first.");
       return;
     }
-    setAddCount(addCount - 1)
-  }
+
+    // Ensure the user can't add more than the available stock
+    if (addCount >= selectedItem.units) {
+      alert("You have reached the maximum stock limit for this item.");
+      return;
+    }
+
+    setAddCount(addCount + 1);
+
+    let newUrl = url + "/api/cart/add";
+    await axios.post(newUrl, {
+      user,
+      selectedItem
+    });
+  };
+
+  const decreaseCountAdd = async () => {
+    if (!selectedItem || Object.keys(selectedItem).length === 0) {
+      alert("Please select a seller first.");
+      return;
+    }
+
+    let newUrl = url + "/api/cart/remove";
+    await axios.post(newUrl, { user, selectedItem });
+
+    setAddCount((prev) => {
+      if (prev === 0) {
+        setisAdding(false);
+        return prev; // Don't decrease below 1
+      }
+      return prev - 1;
+    });
+  };
+
+
+  // const decreaseCountAdd = async () => {
+  //   if (!selectedItem || Object.keys(selectedItem).length === 0) {
+  //     alert("Please select a seller first.");
+  //     return;
+  //   }
+
+  //   let newUrl = url + '/api/cart/remove';
+  //   await axios.post(newUrl, {
+  //     user,
+  //     selectedItem
+  //   });
+
+  //   if (addCount - 1 === 0) {
+  //     setisAdding(false);
+  //     return;
+  //   }
+  //   setAddCount(addCount - 1);
+  // };
+
+
+
+  // if (addCount - 1 === 0) {
+  //   setisAdding(false);
+  //   return;
+  // }
+  // setAddCount(addCount - 1);
+
 
   const handleBackToMainPag = () => {
     setFoodItem({})
     setBuyPage(false)
   }
+  // const addtoCart = async () => {
+  // let newUrl = url + '/api/cart/add';
+  // await axios.post(newUrl, foodItem);
+  // }
+  // const removeCart = async () => {
+  // let newUrl = url + '/api/cart/remove';
+  // await axios.post(newUrl, foodItem)
+  // }
+  useEffect(() => {
+    const getFood = async () => {
+      const response = await axios.post(url + '/api/food/getone', { foodId: foodItem._id });
+      console.log(response.data)
+      // setFoodItem(response.data.food);
+      setFarmers(response.data.listed)
+      // const { prices, ...rest } = response.data.food;
+      // setSelected(rest);
+    }
+    getFood();
+  }, [foodItem])
+
+
 
   return (
     <Container width='mx'>
@@ -56,14 +140,14 @@ function FoodItem({ }) {
                   {foodItem.category}
                 </Typography >
                 <Typography sx={{ marginBottom: 3, fontFamily: 'Outfit', fontWeight: '500' }} variant='h4'>
-                  {foodItem.productName}
+                  {foodItem.name}
                 </Typography>
                 <Divider></Divider>
               </Box>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 2 }}>
                 <Box sx={{ paddingLeft: '10px' }}>
                   <Typography variant='h6'>
-                    ₹{foodItem.price}/ {foodItem.availableUnit}
+                    {currPrice}
                   </Typography>
                   <Typography>
                     (inclusive of all taxes)
@@ -80,55 +164,24 @@ function FoodItem({ }) {
 
                       </>
                     ) : (
-                      <>Add to Cart</>
+                      <div onClick={addIteminc}>Add to Cart</div>
                     )}
                   </div>
-
                 </Box>
-                
+
               </Box>
               <Box sx={{ paddingLeft: '10px' }}>
-  <Divider />
-  <Typography variant="h5" sx={{ fontFamily: 'Outfit', fontWeight: '400', marginTop: 2 }}>
-    Choose Your Farm:
-  </Typography>
-
-  <RadioGroup
-    name="farmSelection"
-    onChange={(event) => {
-      console.log("Selected farm:", event.target.value);
-    }}
-  >
-    {dummyFarmers
-      .filter((farmer) => foodItem.sellerId.includes(farmer.sellerId))
-      .map((farmer) => {
-        return (
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 2 }} key={farmer.sellerId}>
-            <Box>
-              <Typography variant="h6" sx={{ fontFamily: 'Outfit', fontWeight: '400', marginTop: 2 }}>{farmer["Farm Name"]}</Typography>
-              <Typography>{farmer["Farm Location"]}</Typography>
+                <Divider />
+                <Typography variant="h5" sx={{ fontFamily: 'Outfit', fontWeight: '400', my: 2 }}>
+                  Choose Your Farm:
+                </Typography>
+              </Box>
             </Box>
-            <Box>
-              <FormControlLabel
-                value={farmer.sellerId}
-                control={<Radio />}
-                label=""
-              />
-            </Box>
-          </Box>
-        );
-      })}
-  </RadioGroup>
-</Box>
-            </Box>
-            {/* <Box> */}
-            {/* </Box> */}
           </Paper>
         </Grid2>
 
-        {/* part 2*/}
 
-        <Grid2 size={{ xs: 12, md: 6 }}>
+        {/* <Grid2 size={{ xs: 12, md: 6 }}>
           <Paper>
             <Box>
               <img style={{ width: '100%', borderRadius: '5px' }} src={foodItem.imageUrl}></img>
@@ -152,44 +205,41 @@ function FoodItem({ }) {
               </Box>
             </Box>
           </Paper>
-        </Grid2>
+        </Grid2> */}
+        {farmers.length > 0 && (
+          <Box sx={{ paddingLeft: '10px' }}>
+            <Typography variant="h5" sx={{ fontFamily: 'Outfit', fontWeight: '400', my: 2 }}>
+              Choose Your Farm:
+            </Typography>
+            <RadioGroup
+              value={selectedItem?._id || ""}
+              onChange={(event) => {
+                const selectedFarmer = farmers.find(farmer => farmer._id === event.target.value);
+                if (selectedFarmer) {
+                  setSelected(selectedFarmer);
+                  setPrice(`₹${selectedFarmer.price}`);
+                  setAddCount(1); // Reset quantity
+                  setisAdding(false); // Reset add button state
+                }
+              }}
+            >
+              {farmers.map((farmer) => (
+                <FormControlLabel
+                  key={farmer._id}
+                  value={farmer._id}
+                  control={<Radio />}
+                  label={`${farmer.farmerId.name} - ₹${farmer.price} (Available: ${farmer.units})`}
+                />
+              ))}
+            </RadioGroup>
+          </Box>
+        )}
+
+
       </Grid2>
 
-
-     
-      {/* 
-        <Container sx={{ height: '80vh' }}>
-        </Container> */}
-
-
-      {/* <Container sx={{ height: '80vh' }}>
-
-      </Container> */}
     </Container>
 
-    // </Container>
-
-    // <div className='food-item'>
-    //     <div className="food-item-img-container">
-    //         <img className='food-item-image' src={url+"/images/"+image} alt="" />
-    //         {!cartItems[id]
-    //             ?<img className='add' onClick={()=>addToCart(id)} src={assets.add_icon_white} alt="" />
-    //             :<div className='food-item-counter'>
-    //               <img onClick={()=>removeFromCart(id)} src={assets.remove_icon_red} alt='' />
-    //               <p className='cartitemsp'>{cartItems[id]}</p>
-    //               <img onClick={()=>addToCart(id)} src={assets.add_icon_green} alt='' />
-    //               </div>
-    //         }
-    //     </div>
-    //     <div className="food-item-info">
-    //         <div className="food-item-name-rating">
-    //             <p className='namewe'>{name}</p>
-    //             <img className='ratingstars' src={assets.rating_starts} alt="" />
-    //         </div>
-    //         <p className="food-item-desc">{description}</p>
-    //         <p className="food-item-price">${price}</p>
-    //     </div>
-    // </div>
   )
 }
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import Navbar from './components/Navbar/Navbar'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home/Home'
@@ -9,16 +9,25 @@ import { useState } from 'react'
 import LoginPopup from './components/LoginPopup/LoginPopup'
 import Verify from './pages/Verify/Verify'
 import MyOrders from './pages/MyOrders/MyOrders'
+import { StoreContext } from './context/StoreContext'
 
 const App = () => {
+  const {setUser,fetchFoodList,user } = useContext(StoreContext)
 
-  const [showLogin,setShowLogin] = useState(false)
-  const [showLoginSeller,setShowLoginSeller]=useState(false)
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem('user')))
+    fetchFoodList();
+  }, [])
+
+
+  const [showLogin, setShowLogin] = useState(false)
+  const [showLoginSeller, setShowLoginSeller] = useState(false)
 
   return (
     <>
-    {(showLogin||showLoginSeller)? <LoginPopup setShowLogin={setShowLogin} showLoginSeller={showLoginSeller} setShowLoginSeller={setShowLoginSeller}/>:<></>}
-    <div className='app'>
+      {(showLogin || showLoginSeller) ? <LoginPopup setShowLogin={setShowLogin} showLoginSeller={showLoginSeller} setShowLoginSeller={setShowLoginSeller} /> : <></>}
+      <div className='app'>
         <Navbar setShowLoginSeller={setShowLoginSeller} setShowLogin={setShowLogin} />
         <Routes>
           <Route path='/' element={<Home />} />

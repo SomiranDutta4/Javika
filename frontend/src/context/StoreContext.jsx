@@ -14,6 +14,8 @@ const StoreContextProvider = (props) => {
     const [filterFood, setFilterFood] = useState(null);
     const [filterCat, setFilterCat] = useState(null)
     const [food, setFood] = useState([])
+    const [user, setUser] = useState({})
+    const [food_Item, setFood_Item] = useState({})
 
 
     const addToCart = async (itemId) => {
@@ -29,61 +31,65 @@ const StoreContextProvider = (props) => {
     }
 
     const removeFromCart = async (itemId) => {
-        setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }))
-        if (token) {
-            await axios.post(url + "/api/cart/remove", { itemId }, { headers: { token } })
+        // setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }))
+        setCartItems((prev) => {
+            // Filter out the item with matching listing._id
+            const updatedCart = prev.filter(item => item.listing._id !== itemId);
+            return updatedCart;
+        });
+        if (user) {
+            await axios.post(url + "/api/cart/removeAll", { itemId: itemId, user: user })
         }
     }
 
     const getTotalCartAmount = () => {
         let totalAmount = 0;
-        for (const item in cartItems) {
-            if (cartItems[item] > 0) {
-                let itemInfo = food_list.find((product) => product._id === item)
-                totalAmount += itemInfo.price * cartItems[item];
-            }
+        if (!cartItems) {
+            return 0
         }
+        console.log(cartItems)
+        Object.entries(cartItems).forEach(([id, item]) => {
+            if (item.listing.units > 0) {
+                totalAmount += item.listing.price * item.units;  // Add price * units to total
+            }
+        });
+
         return totalAmount;
     }
 
     const fetchFoodList = async () => {
         const response = await axios.get(url + "/api/food/list");
-        setFoodList(response.data.data)
+        let foods = response.data.data
+        foods = await foods.sort((a, b) => b.units - a.units);
+        setFoodList(foods)
     }
 
-    const loadCartData = async (token) => {
-        const response = await axios.post(url + "/api/cart/get", {}, { headers: { token } });
-        setCartItems(response.data.cartData);
-    }
-
-
-    useEffect(() => {
-        async function loadData() {
-            await fetchFoodList();
-            if (localStorage.getItem("token")) {
-                setToken(localStorage.getItem("token"));
-                await loadCartData(localStorage.getItem("token"));
-            }
+    const fetchCart = async () => {
+        const newUrl = url + '/api/cart/get';
+        const response = await axios.post(newUrl, user);
+        if (response.status === 200) {
+            setCartItems(response.data.cart)
         }
-        loadData();
-    }, [])
+        console.log(response.data.cart)
+    }
+
+
+    // useEffect(() => {
+
+    // }, [])
+
     const loadFoods = async () => {
         const newUrl = url += '/api/farmer/foods/All'
         const response = await axios.get(newUrl);
 
         if (response.data.success) {
-            // console.log(response.data)
-            // setFarmer(response.data.farmer)
             setFood(response.data.foods)
-            // setToken(response.data.token);
-            // localStorage.setItem("token", response.data.token)
-            // setShowLogin(false)
         }
     }
     useEffect(() => {
         loadFoods();
-        // farmerRoute.get('/foods/All',findAllFood);
     }, [url])
+
 
 
     const contextValue = {
@@ -94,15 +100,16 @@ const StoreContextProvider = (props) => {
         removeFromCart,
         getTotalCartAmount,
         url,
-        token,
+        token, food_Item, setFood_Item,
         setToken,
         foodItem,
         setFoodItem,
-        BuyPage,
-        setBuyPage,
+        BuyPage, fetchFoodList,
+        setBuyPage, user, setUser,
+        // auth,setAuth,
         filterFood, setFilterFood,
-        filterCat, setFilterCat,food
-        ,setFood
+        filterCat, setFilterCat, food
+        , setFood, fetchCart
     }
 
     return (

@@ -12,8 +12,8 @@ const List = ({ url }) => {
   const fetchList = async () => {
     // const newUrl = `${url}/api/farmer/foods/All`;
     const newUrl = `${url}/api/farmer/products/All`;
-    const response = await axios.put(newUrl,farmer);
-    setList(response.data);
+    const response = await axios.put(newUrl, farmer);
+    setList(await response.data);
     // console.log(response.data)
   }
 
@@ -34,22 +34,23 @@ const List = ({ url }) => {
       return;
     }
 
-    const response = await axios.post(`${url}/api/food/remove`, { id: foodId, farmer });
+    const response = await axios.post(`${url}/api/food/remove`, { id: foodId._id, farmer });
 
     await fetchList();
+    // setList((prevList) => prevList.filter(item => item.foodId._id !== foodId));
 
-    if (response.data.success) {
-      setList(response.data.newProducts)
+    if (response.data.success || response.status == 200) {
+      // setList(response.data.newProducts)
       toast.success(response.data.message);
     } else {
       toast.error('Error');
     }
   };
   const findMyLists = () => {
-    const filteredList = food.filter(item =>
-      item.prices.some(price => price.soldBy.toString() === farmer._id)
-    );
-    setList(filteredList);
+    // const filteredList = food.filter(item =>
+    //   item.prices.some(price => price.soldBy.toString() === farmer._id)
+    // );
+    // setList(filteredList);
   }
 
 
@@ -60,6 +61,9 @@ const List = ({ url }) => {
   useEffect(() => {
     findMyLists()
   }, [food])
+  // useEffect(() => {
+  //   console.log(list)
+  // }, [list])
 
   // return (
   //   <div className='list add flex-col'>
@@ -91,18 +95,19 @@ const List = ({ url }) => {
       <p>All Foods List</p>
       <div className="list-table">
         <div className="list-table-format title">
-          <b>Image</b>
           <b>Name</b>
           <b>Category</b>
           <b>Price</b>
+          <b>Units</b>
           <b>Action</b>
         </div>
         {list.map((item, index) => (
           <div key={index} className="list-table-format">
-            <img src={`${url}/images/` + item.image} alt="" />
-            <p>{item.name}</p>
-            <p>{item.category}</p>
-            <p>${item.price}</p>
+            {/* <img src={`${url}/images/` + item.image} alt="" /> */}
+            <p>{item.foodId.name}</p>
+            <p>{item.foodId.category}</p>
+            <p>₹{item.price}</p>
+            <p>{item.units}</p>
             <p onClick={() => removeFood(item.foodId)} className="cursor">X</p>
           </div>
         ))}

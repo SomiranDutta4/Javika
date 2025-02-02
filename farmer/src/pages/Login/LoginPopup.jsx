@@ -41,6 +41,7 @@ const LoginPopup = ({ }) => {
         const response = await axios.post(newUrl, data);
 
         if (response.data.success||response.status===200) {
+            localStorage.setItem("farmer",JSON.stringify(response.data.farmer))
             setFarmer(response.data.farmer)
             setAuth(true)
             // setToken(response.data.token);

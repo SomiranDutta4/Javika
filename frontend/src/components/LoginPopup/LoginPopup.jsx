@@ -8,7 +8,7 @@ import { Alert } from '@mui/material'
 
 const LoginPopup = ({ setShowLogin, showLoginSeller, setShowLoginSeller }) => {
 
-  const { url, setToken } = useContext(StoreContext)
+  const { url, setToken,setUser } = useContext(StoreContext)
 
 
   const [currState, setCurrState] = useState("Login")
@@ -60,9 +60,11 @@ const LoginPopup = ({ setShowLogin, showLoginSeller, setShowLoginSeller }) => {
       setToken(response.data.token);
       localStorage.setItem("token", response.data.token)
       setShowLogin(false)
+      localStorage.setItem('user',JSON.stringify(response.data.user))
+      setUser(response.data.user)
     }
     else {
-      alert(res.data.message)
+      alert(response.data.message)
     }
 
   }

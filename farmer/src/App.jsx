@@ -9,11 +9,20 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { StoreContext } from './context/StoreContext'
 import LoginPopup from './pages/Login/LoginPopup'
+import { useEffect } from 'react'
 
 const App = () => {
-  const { isAuth } = useContext(StoreContext)
+  const { isAuth, setFarmer,setAuth } = useContext(StoreContext)
 
   const url = "http://localhost:4000"
+  useEffect(() => {
+    let newFarmer = JSON.parse(localStorage.getItem("farmer"))
+    setFarmer(newFarmer)
+    if (newFarmer && newFarmer._id) {
+      setAuth(true)
+    }
+
+  }, [])
 
   if (isAuth) {
     return (
@@ -31,8 +40,8 @@ const App = () => {
         </div>
       </div>
     )
-  }else{
-    return(
+  } else {
+    return (
       <div>
         <LoginPopup></LoginPopup>
       </div>

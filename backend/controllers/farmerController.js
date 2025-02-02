@@ -1,5 +1,6 @@
 import foodModel from "../models/foodModel.js";
 import Farmer from "../models/farmerModel.js";
+import listingModel from "../models/listingModel.js";
 
 const findAllFood = async function (req, res) {
     try {
@@ -48,56 +49,20 @@ const createFarmer = async function(req, res) {
         return res.status(500).json({ success: false, message: "Something went wrong. Please try again." });
     }
 };
-
 const getFarmerFoods=async function(req,res){
-    const farmer=await Farmer.findOne({_id:req.body._id});
-    return res.status(200).json(farmer.products)
+    const listings=await listingModel.find({farmerId:req.body._id})
+    .populate('foodId')
+    return res.status(200).json(listings)
 }
-// const createFarmer = async function(req, res) {
-//     try {
-//         const { name, email, password, aadhaar, location, panNumber } = req.body;
 
-//         // Validate required fields
-//         if (!name || !email || !password || !aadhaar || !location || !panNumber) {
-//             return res.status(400).json({ error: "All fields are required." });
-//         }
+const decreaseItems=async(req,res)=>{
+    // const listings=listingModel.find({farmerId:req.body.farmer._id})
 
-//         // Check if email, farmerId, or aadhaar already exists
-//         const existingFarmer = await Farmer.findOne({
-//             email:email
-//         });
+}
 
-//         if (existingFarmer) {
-//             return res.status(400).json({ error: "Email, Farmer ID, or Aadhaar already exists." });
-//         }
-//         // let farmerId = Math.floor(100000 + Math.random() * 900000);
-//         let farmerId = 1000
-
-//         // Hash the password before saving
-//         const hashedPassword = await bcrypt.hash(password, 10);
-
-//         // Create a new farmer document
-
-//         const newFarmer = new Farmer({
-//             name,
-//             email,
-//             password: hashedPassword,
-//             farmerId,
-//             aadhaar,
-//             location,
-//             panNumber,
-//         });
-
-//         // Save the farmer to the database
-//         await newFarmer.save();
-
-//         res.status(201).json({ message: "Farmer created successfully!", farmer: newFarmer });
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ error: "Something went wrong. Please try again." });
-//     }
-// };
-
+const getFarmerOrders=async function(req,res){
+    
+}
 
 const loginFarmer = async function (req, res) {
     try {

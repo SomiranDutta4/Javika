@@ -9,13 +9,15 @@ const Navbar = ({ setShowLogin, setShowLoginSeller }) => {
 
   const [menu, setMenu] = useState("home")
 
-  const { getTotalCartAmount, token, setToken } = useContext(StoreContext)
+  const { getTotalCartAmount,setUser, user,token, setToken } = useContext(StoreContext)
 
 
   const navigate = useNavigate();
 
   const logout = () => {
+    localStorage.removeItem('user')
     localStorage.removeItem("token");
+    setUser({})
     setToken("");
     navigate("/")
   }
@@ -53,7 +55,8 @@ const Navbar = ({ setShowLogin, setShowLoginSeller }) => {
         document.getElementById('visual-toggle-button').classList.remove('lightmode');
       }
     });
-  }, []); // Empty dependency array to run the effect only once
+  }, []);
+// Empty dependency array to run the effect only once
 
   return (
     <div className='navbar'>
@@ -77,7 +80,7 @@ const Navbar = ({ setShowLogin, setShowLoginSeller }) => {
           <Link to='/cart'><img className='basketlogo' src={assets.basket_icon} alt="" /></Link>
           <div className={getTotalCartAmount() === 0 ? "" : "dot"}></div>
         </div>
-        {!token ? <button className='signbutton' onClick={() => setShowLogin(true)}>sign in</button>
+        {!(user) ? <button className='signbutton' onClick={() => setShowLogin(true)}>sign in</button>
           : <div className='navbar-profile'>
             <img src={assets.profile_icon} className='white-filter' alt="" />
             <ul className="nav-profile-dropdown">

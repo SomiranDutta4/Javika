@@ -4,6 +4,10 @@ import bcrypt from "bcrypt"
 import validator from "validator"
 
 // login user
+const findUser=async(req,res)=>{
+    
+}
+
 const loginUser = async (req,res) => {
     const {email,password} = req.body;
     try {
@@ -20,7 +24,7 @@ const loginUser = async (req,res) => {
         }
 
         const token = createToken(user._id);
-        res.json({success:true,token})
+        return res.status(200).json({success:true,user,token})
     } catch (error) {
         console.log(error);
         res.json({success:false,message:"Error"})
@@ -33,7 +37,6 @@ const createToken = (id) => {
 
 // register user
 const registerUser = async (req,res) => {
-    console.log(req.body);
     const {name,password,email} = req.body;
     try {
         //checking if user already exists
@@ -61,11 +64,10 @@ const registerUser = async (req,res) => {
             email:email,
             password:hashedPassword
         })
-        console.log(newUser);
         const user = await newUser.save()
         const token = createToken(user._id)
-        console.log(user);
-        res.json({success:true,token});
+        return res.status(201).json({success:true,token,user});
+        
     } catch (error) {
         console.log(error);
         res.json({success:false,message:"Error"})
