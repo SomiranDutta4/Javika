@@ -102,12 +102,12 @@ const PlaceOrder = () => {
             <hr />
             <div className="cart-total-details">
               <p>Delivery Fee</p>
-              <p>${totalPrice === 0 ? 0 : 2}</p>
+              <p>${totalPrice === 0 ? 0 : 40}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <b>Total</b>
-              <b>${totalPrice === 0 ? 0 : totalPrice + 2}</b>
+              <b>${totalPrice === 0 ? 0 : totalPrice + 40}</b>
             </div>
           </div>
           <button style={{backgroundColor:'#232a1c',color:'#eef5eb'}} onClick={proceedToOrder}>CONFIRM ORDER</button>

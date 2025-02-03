@@ -24,8 +24,8 @@
 }
 
 .sidebar-option.active{
-    background-color: var(--sidebar);
-    border-color: tomato;
+    background-color:#cbe7bf;
+    border-color: #536640;
 }
 
 

@@ -11,9 +11,9 @@
 
 body {
   min-height: 100vh;
+  background-color: #e6e7d7;
   /* background-color: var(--body-color); */
 }
-
 a {
   text-decoration: none;
   color: inherit

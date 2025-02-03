@@ -7,7 +7,7 @@ import axios from 'axios'
 
 const Cart = () => {
 
-  const { setCartItems, cartItems, fetchCart, food_list, user, removeFromCart, getTotalCartAmount, url } = useContext(StoreContext)
+  const { setCartItems, cartItems, setUser, fetchCart, food_list, user, removeFromCart, getTotalCartAmount, url } = useContext(StoreContext)
 
   const navigate = useNavigate();
   const [totalAmt, setTotalAmt] = useState(0)
@@ -24,7 +24,11 @@ const Cart = () => {
   useEffect(() => {
     fetchCart()
   }, [user])
-  
+
+  // useEffect(() => {
+  //   setUser(JSON.parse(localStorage.getItem('user')))
+  // }, [user])
+
   useEffect(() => {
     let total = 0;
     // Object.entries(cartItems).forEach(([id, item]) => {
@@ -42,12 +46,12 @@ const Cart = () => {
     <div className='cart'>
       <div className="cart-items">
         <div className="cart-items-title">
-          <p>Items</p>
-          <p>Title</p>
-          <p>Price</p>
-          <p>Quantity</p>
-          <p>Total</p>
-          <p>Remove</p>
+          {/* <p>Items</p> */}
+          <p className='items-sss'>Title</p>
+          <p className='items-sss'>Price</p>
+          <p className='items-sss'>Quantity</p>
+          <p className='items-sss'>Total</p>
+          <p className='items-sss'>Remove</p>
         </div>
         <br />
         <hr />
@@ -70,17 +74,17 @@ const Cart = () => {
             );
           }
         })} */}
-        {Object.entries(cartItems).map(([key, item], index) => {
+        {cartItems && Object.entries(cartItems).map(([key, item], index) => {
           if (item?.units > 0) {
             return (
-              <div style={{backgroundColor:'#768f6b',borderRadius:'10px'}} key={key}>
-                <div style={{padding:'10px 5px 10px 5px', color:'#eef5eb',borderRadius:'10px'}} className='cart-items-title cart-items-item'>
-                  <img src={item.listing.foodId.image} />
-                  <p>{item.listing.foodId.name}</p>
-                  <p>${item.listing.price}</p>
-                  <p>{item.units}</p>
-                  <p>${item.listing.price * item.units}</p>
-                  <p onClick={() => removeFromCart(item.listing._id)} className='cross'>x</p>
+              <div style={{ backgroundColor: '#768f6b', borderRadius: '10px' }} key={key}>
+                <div style={{ padding: '10px 5px 10px 5px', color: '#eef5eb', borderRadius: '10px' }} className='cart-items-title cart-items-item'>
+                  {/* <img src={item.listing.foodId.image} /> */}
+                  <p className='items-sss'>{item.listing.foodId.name}</p>
+                  <p className='items-sss'>${item.listing.price}</p>
+                  <p className='items-sss'>{item.units}</p>
+                  <p className='items-sss'>${item.listing.price * item.units}</p>
+                  <p className='items-sss cross' onClick={() => removeFromCart(item.listing._id)}>x</p>
                 </div>
                 <hr />
               </div>
@@ -109,7 +113,7 @@ const Cart = () => {
               <b>${totalAmt + deliveryCharges}</b>
             </div>
           </div>
-          <button style={{backgroundColor:'#232a1c',color:'#cbe7bf'}} onClick={() => navigate('/order')}>PROCEED TO CHECKOUT</button>
+          <button style={{ backgroundColor: '#232a1c', color: '#cbe7bf' }} onClick={() => navigate('/order')}>PROCEED TO CHECKOUT</button>
         </div>
       </div>
     </div>

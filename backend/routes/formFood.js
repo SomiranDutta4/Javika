@@ -6,6 +6,7 @@ const organicFarmingProducts = [
         "productName": "Tomatoes",
         "category": "Vegetables",
         "price": 80,
+        "marketPrice": 100,
         "description": "Fresh and juicy organic tomatoes grown without pesticides.",
         "availableUnit": "kg",
         "sellerId": ["S001", "S003"],
@@ -16,6 +17,7 @@ const organicFarmingProducts = [
         "productName": "Carrots",
         "category": "Vegetables",
         "price": 60,
+        "marketPrice": 120,
         "description": "Crisp and fresh carrots, packed with vitamins.",
         "availableUnit": "kg",
         "sellerId": ["S002", "S004"],
@@ -26,6 +28,8 @@ const organicFarmingProducts = [
         "productName": "Broccoli",
         "category": "Vegetables",
         "price": 120,
+        "marketPrice": 130,
+
         "description": "Fresh green broccoli, rich in fiber and nutrients.",
         "availableUnit": "kg",
         "sellerId": ["S001", "S005"],
@@ -36,6 +40,8 @@ const organicFarmingProducts = [
         "productName": "Spinach",
         "category": "Vegetables",
         "price": 50,
+        "marketPrice": 90,
+
         "description": "Fresh and organic spinach, packed with iron and vitamins.",
         "availableUnit": "kg",
         "sellerId": ["S003", "S006"],
@@ -46,6 +52,8 @@ const organicFarmingProducts = [
         "productName": "Onions",
         "category": "Vegetables",
         "price": 40,
+        "marketPrice": 110,
+
         "description": "Fresh onions with a pungent flavor, perfect for cooking.",
         "availableUnit": "kg",
         "sellerId": ["S002", "S004"],
@@ -56,6 +64,8 @@ const organicFarmingProducts = [
         "productName": "Apples",
         "category": "Fruits",
         "price": 150,
+        "marketPrice": 130,
+
         "description": "Crisp and sweet apples, perfect for snacking.",
         "availableUnit": "kg",
         "sellerId": ["S001", "S007"],
@@ -65,6 +75,8 @@ const organicFarmingProducts = [
         "productId": 7,
         "productName": "Bananas",
         "category": "Fruits",
+        "marketPrice": 120,
+
         "price": 120,
         "description": "Ripe and sweet bananas, full of energy.",
         "availableUnit": "kg",
@@ -75,6 +87,8 @@ const organicFarmingProducts = [
         "productId": 8,
         "productName": "Oranges",
         "category": "Fruits",
+        "marketPrice": 120,
+
         "price": 140,
         "description": "Fresh and tangy oranges, packed with vitamin C.",
         "availableUnit": "kg",
@@ -86,6 +100,8 @@ const organicFarmingProducts = [
         "productName": "Pineapples",
         "category": "Fruits",
         "price": 180,
+        "marketPrice": 80,
+
         "description": "Juicy and sweet pineapples, perfect for tropical flavor.",
         "availableUnit": "kg",
         "sellerId": ["S005", "S010"],
@@ -95,6 +111,8 @@ const organicFarmingProducts = [
         "productId": 10,
         "productName": "Strawberries",
         "category": "Fruits",
+        "marketPrice": 430,
+
         "price": 200,
         "description": "Fresh and sweet strawberries, perfect for desserts.",
         "availableUnit": "kg",
@@ -106,6 +124,8 @@ const organicFarmingProducts = [
         "productName": "Milk",
         "category": "Dairy Products",
         "price": 60,
+        "marketPrice": 110,
+
         "description": "Fresh, organic milk rich in calcium.",
         "availableUnit": "ltr",
         "sellerId": ["S001", "S002"],
@@ -116,6 +136,8 @@ const organicFarmingProducts = [
         "productName": "Cheese",
         "category": "Dairy Products",
         "price": 250,
+        "marketPrice": 220,
+
         "description": "Creamy and delicious cheese for all your recipes.",
         "availableUnit": "kg",
         "sellerId": ["S003", "S004"],
@@ -126,6 +148,8 @@ const organicFarmingProducts = [
         "productName": "Yogurt",
         "category": "Dairy Products",
         "price": 90,
+        "marketPrice": 122,
+
         "description": "Smooth and creamy yogurt, great for breakfast.",
         "availableUnit": "ltr",
         "sellerId": ["S005", "S006"],
@@ -136,6 +160,8 @@ const organicFarmingProducts = [
         "productName": "Butter",
         "category": "Dairy Products",
         "price": 160,
+        "marketPrice": 190,
+
         "description": "Fresh and creamy butter for baking and cooking.",
         "availableUnit": "kg",
         "sellerId": ["S007", "S008"],
@@ -145,6 +171,8 @@ const organicFarmingProducts = [
         "productId": 15,
         "productName": "Cottage Cheese",
         "category": "Dairy Products",
+        "marketPrice": 160,
+
         "price": 130,
         "description": "Soft and fresh cottage cheese, perfect for snacking.",
         "availableUnit": "kg",
@@ -156,6 +184,8 @@ const organicFarmingProducts = [
         "productName": "Rice",
         "category": "Cereals and Pulses",
         "price": 70,
+        "marketPrice": 150,
+
         "description": "Long grain rice, perfect for daily meals.",
         "availableUnit": "kg",
         "sellerId": ["S001", "S003"],
@@ -166,6 +196,8 @@ const organicFarmingProducts = [
         "productName": "Wheat Flour",
         "category": "Cereals and Pulses",
         "price": 45,
+        "marketPrice": 150,
+
         "description": "Freshly milled wheat flour, ideal for making rotis.",
         "availableUnit": "kg",
         "sellerId": ["S002", "S004"],
@@ -176,6 +208,8 @@ const organicFarmingProducts = [
         "productName": "Chickpeas",
         "category": "Cereals and Pulses",
         "price": 90,
+        "marketPrice": 130,
+
         "description": "Organic chickpeas, great for making hummus.",
         "availableUnit": "kg",
         "sellerId": ["S003", "S005"],
@@ -185,6 +219,8 @@ const organicFarmingProducts = [
         "productId": 19,
         "productName": "Lentils",
         "category": "Cereals and Pulses",
+        "marketPrice": 110,
+
         "price": 50,
         "description": "High-quality lentils, a great source of protein.",
         "availableUnit": "kg",
@@ -195,6 +231,8 @@ const organicFarmingProducts = [
         "productId": 20,
         "productName": "Quinoa",
         "category": "Cereals and Pulses",
+        "marketPrice": 180,
+
         "price": 250,
         "description": "Healthy and gluten-free quinoa, a perfect addition to meals.",
         "availableUnit": "kg",
@@ -205,6 +243,8 @@ const organicFarmingProducts = [
         "productId": 21,
         "productName": "Almonds",
         "category": "Dry Fruits",
+        "marketPrice": 130,
+
         "price": 350,
         "description": "Roasted almonds, a healthy snack full of protein.",
         "availableUnit": "kg",
@@ -214,6 +254,8 @@ const organicFarmingProducts = [
     {
         "productId": 22,
         "productName": "Cashews",
+        "marketPrice": 130,
+
         "category": "Dry Fruits",
         "price": 450,
         "description": "Crunchy and buttery cashews, perfect for snacking.",
@@ -224,6 +266,8 @@ const organicFarmingProducts = [
     {
         "productId": 23,
         "productName": "Walnuts",
+        "marketPrice": 120,
+
         "category": "Dry Fruits",
         "price": 400,
         "description": "Fresh and crunchy walnuts, perfect for your recipes.",
@@ -235,6 +279,8 @@ const organicFarmingProducts = [
         "productId": 24,
         "productName": "Pistachios",
         "category": "Dry Fruits",
+        "marketPrice": 120,
+
         "price": 500,
         "description": "Salted pistachios, a tasty and nutritious snack.",
         "availableUnit": "kg",
@@ -246,6 +292,8 @@ const organicFarmingProducts = [
         "productName": "Dates",
         "category": "Dry Fruits",
         "price": 300,
+        "marketPrice": 100,
+
         "description": "Fresh and sweet dates, great for energy.",
         "availableUnit": "kg",
         "sellerId": ["S009", "S010"],
@@ -255,6 +303,8 @@ const organicFarmingProducts = [
         "productId": 25,
         "productName": "Basil",
         "category": "Herbs",
+        "marketPrice": 100,
+
         "price": 80,
         "description": "Fresh organic basil, perfect for cooking and garnishing.",
         "availableUnit": "bunch",
@@ -266,6 +316,8 @@ const organicFarmingProducts = [
         "productName": "Mint",
         "category": "Herbs",
         "price": 50,
+        "marketPrice": 20,
+
         "description": "Fresh mint leaves, great for teas and recipes.",
         "availableUnit": "bunch",
         "sellerId": ["S003", "S005"],
@@ -275,6 +327,8 @@ const organicFarmingProducts = [
         "productId": 27,
         "productName": "Green Tea",
         "category": "Beverages",
+        "marketPrice": 220,
+
         "price": 200,
         "description": "High-quality organic green tea leaves.",
         "availableUnit": "box",
@@ -285,6 +339,8 @@ const organicFarmingProducts = [
         "productId": 28,
         "productName": "Coffee Beans",
         "category": "Beverages",
+        "marketPrice": 220,
+
         "price": 300,
         "description": "Premium roasted coffee beans for the perfect brew.",
         "availableUnit": "kg",
@@ -305,15 +361,129 @@ const organicFarmingProducts = [
 //         }
 //     ]
 // });
+const newMush=
+[
+    {
+        "productId": 26,
+        "productName": "Button Mushroom",
+        "category": "Mushrooms",
+        "marketPrice": 120,
+        "price": 100,
+        "description": "Fresh white button mushrooms, great for salads, soups, and cooking.",
+        "availableUnit": "kg",
+        "sellerId": ["S002", "S005"],
+        "imageUrl": "https://www.pexels.com/photo/white-button-mushrooms-708489/"
+    },
+    {
+        "productId": 27,
+        "productName": "Portobello Mushroom",
+        "category": "Mushrooms",
+        "marketPrice": 150,
+        "price": 130,
+        "description": "Large, meaty portobello mushrooms, perfect for grilling and stuffing.",
+        "availableUnit": "kg",
+        "sellerId": ["S003", "S006"],
+        "imageUrl": "https://www.pexels.com/photo/fresh-portobello-mushrooms-3575731/"
+    },
+    {
+        "productId": 28,
+        "productName": "Shiitake Mushroom",
+        "category": "Mushrooms",
+        "marketPrice": 200,
+        "price": 180,
+        "description": "Rich and flavorful shiitake mushrooms, commonly used in Asian cuisine.",
+        "availableUnit": "kg",
+        "sellerId": ["S001", "S007"],
+        "imageUrl": "https://www.pexels.com/photo/dried-shiitake-mushrooms-59564/"
+    },
+    {
+        "productId": 29,
+        "productName": "Oyster Mushroom",
+        "category": "Mushrooms",
+        "marketPrice": 180,
+        "price": 160,
+        "description": "Delicate and mild oyster mushrooms, great for stir-fries and soups.",
+        "availableUnit": "kg",
+        "sellerId": ["S002", "S008"],
+        "imageUrl": "https://www.pexels.com/photo/oyster-mushrooms-in-basket-3272481/"
+    },
+    {
+        "productId": 30,
+        "productName": "Enoki Mushroom",
+        "category": "Mushrooms",
+        "marketPrice": 220,
+        "price": 200,
+        "description": "Thin and crunchy enoki mushrooms, commonly used in Japanese and Korean dishes.",
+        "availableUnit": "bunch",
+        "sellerId": ["S003", "S009"],
+        "imageUrl": "https://www.pexels.com/photo/enoki-mushrooms-5184084/"
+    },
+    {
+        "productId": 31,
+        "productName": "Chanterelle Mushroom",
+        "category": "Mushrooms",
+        "marketPrice": 350,
+        "price": 320,
+        "description": "Golden and aromatic chanterelle mushrooms, highly sought after for gourmet dishes.",
+        "availableUnit": "kg",
+        "sellerId": ["S004", "S010"],
+        "imageUrl": "https://www.pexels.com/photo/chanterelle-mushrooms-3223876/"
+    },
+    {
+        "productId": 32,
+        "productName": "Morel Mushroom",
+        "category": "Mushrooms",
+        "marketPrice": 600,
+        "price": 550,
+        "description": "Rare and earthy morel mushrooms, prized for their unique texture and flavor.",
+        "availableUnit": "kg",
+        "sellerId": ["S005", "S011"],
+        "imageUrl": "https://www.pexels.com/photo/morel-mushrooms-1234567/"
+    },
+    {
+        "productId": 33,
+        "productName": "Maitake Mushroom",
+        "category": "Mushrooms",
+        "marketPrice": 280,
+        "price": 250,
+        "description": "Fragrant and clustered maitake mushrooms, excellent for health benefits.",
+        "availableUnit": "kg",
+        "sellerId": ["S006", "S012"],
+        "imageUrl": "https://www.pexels.com/photo/maitake-mushrooms-3567891/"
+    },
+    {
+        "productId": 34,
+        "productName": "King Oyster Mushroom",
+        "category": "Mushrooms",
+        "marketPrice": 250,
+        "price": 220,
+        "description": "Thick and meaty king oyster mushrooms, great for grilling or roasting.",
+        "availableUnit": "kg",
+        "sellerId": ["S007", "S013"],
+        "imageUrl": "https://www.pexels.com/photo/king-oyster-mushrooms-2514884/"
+    },
+    {
+        "productId": 35,
+        "productName": "Black Truffle",
+        "category": "Mushrooms",
+        "marketPrice": 2500,
+        "price": 2300,
+        "description": "Luxurious black truffles, known for their intense aroma and deep flavor.",
+        "availableUnit": "100g",
+        "sellerId": ["S008", "S014"],
+        "imageUrl": "https://www.pexels.com/photo/black-truffle-mushrooms-7294836/"
+    }
+]
 
 const createFood = async (req, res) => {
-    organicFarmingProducts.forEach(food => {
+    newMush.forEach(food => {
         const newFood = foodModel.create({
             name: food.productName,
-            description:food.description,
-            category:food.category,
-            image:food.imageUrl,
-            price:[],
+            description: food.description,
+            category: food.category,
+            image: food.imageUrl,
+            marketPrice: food.marketPrice,
+            price: [],
         })
     })
 }

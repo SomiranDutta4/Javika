@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './Add.css';
-import { assets } from '../../assets/assets';
 import axios from "axios";
 import { StoreContext } from '../../context/StoreContext';
 
@@ -9,6 +8,7 @@ const Add = () => {
     const [selectedCat, setSelectedCat] = useState(null);
     const [list, setList] = useState([]);
     const [productNames, setProductNames] = useState([]);
+    const [marketPrice, setMarketPrice] = useState(null);  // NEW: Store Market Price
     const [data, setData] = useState({
         name: "",
         price: "",
@@ -18,7 +18,7 @@ const Add = () => {
     });
 
     useEffect(() => {
-        // Fetch food items from the API or context
+        // Fetch unique categories from food items
         const uniqueCategories = [...new Set(food.map(item => item.category))];
         setList(uniqueCategories);
     }, [food]);
@@ -50,24 +50,27 @@ const Add = () => {
         }));
 
         if (name === "category") {
-            setSelectedCat(value); // Set the selected category
+            setSelectedCat(value);
             setData((prevData) => ({
                 ...prevData,
-                name: "", // Reset product name when category changes
+                name: "",
                 category: value,
             }));
+            setMarketPrice(null); // Reset market price when category changes
+        }
+
+        if (name === "name") {
+            const selectedFood = food.find(item => item.name === value);
+            if (selectedFood) {
+                setMarketPrice(selectedFood.marketPrice); // Set Market Price
+            } else {
+                setMarketPrice(null);
+            }
         }
     };
 
     const onSubmitHandler = async (event) => {
         event.preventDefault();
-        const formData = new FormData();
-        formData.append("name", data.name);
-        formData.append("price", Number(data.price));
-        formData.append("farmer", JSON.stringify(farmer));
-        formData.append("category", data.category);
-        formData.append("units", data.units);
-
         const response = await axios.post(`${url}/api/food/add`, data);
         if (response.data.success) {
             setData({
@@ -77,7 +80,8 @@ const Add = () => {
                 units: "",
                 farmer: farmer,
             });
-            setSelectedCat(null); // Reset category selection
+            setSelectedCat(null);
+            setMarketPrice(null);
         }
     };
 
@@ -87,7 +91,7 @@ const Add = () => {
                 <div className="add-product-name flex-col">
                     <p>Product Name</p>
                     <select className='selectt' onChange={onChangeHandler} name="name" value={data.name}>
-                        <option value="">Select a product</option> {/* Default blank option */}
+                        <option value="">Select a product</option>
                         {productNames.map((ele) => (
                             <option key={ele._id} value={ele.name}>
                                 {ele.name}
@@ -99,19 +103,31 @@ const Add = () => {
                 <div className="add-category-price">
                     <div className="add-category flex-col">
                         <p>Product Category</p>
-                        <select className='selectt' onChange={onChangeHandler} name="category" value={data.category}>
-                            <option value="">Select a category</option> {/* Default blank option */}
+                        {/* <select className='selectt' onChange={onChangeHandler} name="category" value={data.category}>
+                            <option value="">Select a category</option>
                             {list.map((ele, ind) => (
                                 <option key={ele + ind} value={ele}>
                                     {ele}
                                 </option>
                             ))}
+                        </select> */}
+                        <select className='selectt' onChange={onChangeHandler} name="category" value={data.category}>
+                            <option value="">Select a category</option>
+                            {list.slice().reverse().map((ele, ind) => (
+                                <option key={ele + ind} value={ele}>
+                                    {ele}
+                                </option>
+                            ))}
                         </select>
+
                     </div>
 
                     <div className="add-price flex-col">
                         <p>Product Price</p>
-                        <input className='inputclasa' onChange={onChangeHandler} value={data.price} type="number" name="price" placeholder='$20' />
+                        <input className='inputclasa' onChange={onChangeHandler} value={data.price} type="number" name="price" placeholder={`₹${marketPrice}`} />
+                        {marketPrice !== null && (
+                            <p style={{ fontSize: "12px", color: "gray" }}>Market Price: ₹{marketPrice}</p>
+                        )}
                     </div>
 
                     <div className="add-price flex-col">

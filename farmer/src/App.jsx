@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import Navbar from './components/Navbar/Navbar'
 import Sidebar from './components/Sidebar/Sidebar'
 import { Routes, Route } from 'react-router-dom'
@@ -13,7 +13,8 @@ import { useEffect } from 'react'
 import Analytics from './pages/Analytics/Analytics'
 
 const App = () => {
-  const { isAuth, setFarmer,setAuth } = useContext(StoreContext)
+  const { isAuth, setFarmer, setAuth } = useContext(StoreContext)
+  const [isAnal, setANaly] = useState(false)
 
   const url = "http://localhost:4000"
   useEffect(() => {
@@ -29,10 +30,12 @@ const App = () => {
     return (
       <div>
         <ToastContainer />
-        <Navbar />
+        <Navbar isAnal={setANaly} setANaly={setANaly} />
         <hr />
         <div className="app-content">
-          <Sidebar />
+          {/* {!isAnal && */}
+            <Sidebar isAnal={setANaly} setANaly={setANaly}/>
+          {/* } */}
           <Routes>
             <Route path="/add" element={<Add url={url} />} />
             <Route path="/list" element={<List url={url} />} />

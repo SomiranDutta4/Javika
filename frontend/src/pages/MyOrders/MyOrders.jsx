@@ -14,6 +14,7 @@ const MyOrders = () => {
         try {
             const response = await axios.post(url + "/api/order/userorders", { user: user });
             setData(response.data.orders);
+            console.log(response.data.orders)
 
             // Initialize ratings state from fetched orders
             const initialRatings = {};
@@ -31,6 +32,9 @@ const MyOrders = () => {
             fetchOrders();
         }
     }, [user]);
+    useEffect(() => {
+        console.log(data)
+    }, [data])
 
     // Handle Rating Selection & Submission
     const handleRatingChange = async (item, farmerId, orderId, newValue) => {
@@ -57,7 +61,42 @@ const MyOrders = () => {
         <div className="my-orders">
             <h2 className="myordersp">My Orders</h2>
             <div className="container">
-                {data.length > 0 ? (
+                {Array.isArray(data) && data.length > 0 ? (
+                    data.map((order, index) => (
+                        <div key={index} style={{border:'1px solid #536640'}} className="my-orders-order">
+                            <img src={assets.parcel_icon} alt="Parcel Icon" />
+                            <p>{order.item?.name || "Unknown Item"}</p>
+                            <p>{order.units || "N/A"}</p>
+                            <p>₹{order.amount || 0}.00</p>
+                            <p>
+                                <span style={{ color: '#536640' }}>&#x25cf;</span> <b>{order.status || "Pending"}</b>
+                            </p>
+                            {/* <button style={{ backgroundColor: '#cbe7bf' }} onClick={fetchOrders}>Track Order</button> */}
+
+                            {order.status === "Delivered" && (
+                                <div className="rate-order">
+                                    <p>Rate this Order:</p>
+                                    <Rating
+                                        name={`rating-${order._id}`}
+                                        value={ratings[order._id] || 0}
+                                        precision={1}
+                                        onChange={(event, newValue) =>
+                                            ratings[order._id] === 0
+                                                ? handleRatingChange(order.item, order.farmerId, order._id, newValue)
+                                                : null
+                                        }
+                                        readOnly={ratings[order._id] > 0}
+                                    />
+                                    {ratings[order._id] > 0 && <p className="user-rating">Thank you for rating!</p>}
+                                </div>
+                            )}
+                        </div>
+                    ))
+                ) : (
+                    <p className="no-orders">No orders available.</p>
+                )}
+
+                {/* {data&&data.length > 0 ? (
                     data.map((order, index) => (
                         <div key={index} style={{border:'1px solid #8ea484',borderRadius:'4px'}} className="my-orders-order">
                             <img src={assets.parcel_icon} alt="Parcel Icon" />
@@ -69,7 +108,6 @@ const MyOrders = () => {
                             </p>
                             <button style={{backgroundColor:'#cbe7bf'}} onClick={fetchOrders}>Track Order</button>
 
-                            {/* Show Rating UI for Delivered Orders, but disable if already rated */}
                             {order.status === "Delivered" && (
                                 <div className="rate-order">
                                     <p>Rate this Order:</p>
@@ -82,9 +120,8 @@ const MyOrders = () => {
                                                 ? handleRatingChange(order.item, order.farmerId, order._id, newValue)
                                                 : null
                                         }
-                                        readOnly={ratings[order._id] > 0} // Disable interaction if rated
+                                        readOnly={ratings[order._id] > 0} 
                                     />
-                                    {/* Show "Thank you for rating!" if the order is already rated */}
                                     {ratings[order._id] > 0 && (
                                         <p className="user-rating">Thank you for rating!</p>
                                     )}
@@ -94,7 +131,7 @@ const MyOrders = () => {
                     ))
                 ) : (
                     <p className="no-orders">No orders available.</p>
-                )}
+                )} */}
             </div>
         </div>
     );

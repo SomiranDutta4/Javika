@@ -5,54 +5,36 @@ import axios from "axios";
 import { assets } from "../../assets/assets";
 import { useContext } from "react";
 import { StoreContext } from "../../context/StoreContext";
-import Rating from "@mui/material/Rating"; // Import MUI Rating component
+import Rating from "@mui/material/Rating"; 
+import { Button } from "@mui/material";
 
 const Orders = ({ url }) => {
   const { farmer } = useContext(StoreContext);
   const [orders, setOrders] = useState([]);
 
-  // Fetch all orders for the logged-in farmer
   const fetchAllOrders = async () => {
     try {
       const response = await axios.get(`${url}/api/order/list?farmerId=${farmer._id}`);
-
       if (response.data.success) {
         setOrders(response.data.data);
-        console.log("Orders fetched:", response.data.data);
       } else {
         toast.error("Error fetching orders");
       }
     } catch (error) {
-      console.error("Error:", error);
       toast.error("Failed to fetch orders");
     }
   };
 
-  // Handle status change
-  const statusHandler = async (event, orderId) => {
-    const newStatus = event.target.value;
-    const order = orders.find((o) => o._id === orderId);
-
-    // Prevent invalid status updates (e.g., Out for Delivery → Food Processing, Delivered → Any other status)
-    if (
-      (order.status === "Out for delivery" && newStatus === "Food Processing") ||
-      (order.status === "Delivered" && newStatus !== "Delivered")
-    ) {
-      toast.error("Invalid status update");
-      return;
-    }
-
+  const updateOrderStatus = async (orderId, status) => {
     try {
-      const response = await axios.post(url + "/api/order/status", {
+      const response = await axios.post(`${url}/api/order/status`, {
         orderId,
-        status: newStatus
+        status,
       });
-
       if (response.data.success) {
-        await fetchAllOrders();
+        fetchAllOrders();
       }
     } catch (error) {
-      console.error("Error updating status:", error);
       toast.error("Failed to update order status");
     }
   };
@@ -81,7 +63,7 @@ const Orders = ({ url }) => {
                   {order.address.firstName} {order.address.lastName}
                 </p>
                 <div className="order-item-address">
-                  <p>{order.address.street + ","}</p>
+                  <p>{order.address.street},</p>
                   <p>
                     {order.address.city}, {order.address.state}, {order.address.country}, {order.address.zipcode}
                   </p>
@@ -90,19 +72,31 @@ const Orders = ({ url }) => {
               </div>
               <p>Items: {order.units}</p>
               <p>₹{order.amount}</p>
+              
+              {order.status === "Waiting for farmer's acceptance" ? (
+                <div className="order-acceptance">
+                  <p>Accept Order?</p>
+                  <Button className="accept-btn" onClick={() => updateOrderStatus(order._id, "Food Processing")}>
+                    Yes
+                  </Button>
+                  <Button className="reject-btn" onClick={() => updateOrderStatus(order._id, "Order Rejected")}>
+                    No
+                  </Button>
+                </div>
+              ) : order.status === "Order Rejected" ? (
+                <p style={{color:'red'}} className="order-rejected">Order Rejected</p>
+              ) : (
+                <select onChange={(event) => updateOrderStatus(order._id, event.target.value)} value={order.status}>
+                  <option value="Food Processing" disabled={order.status !== "Food Processing"}>
+                    Food Processing
+                  </option>
+                  <option value="Out for delivery" disabled={order.status === "Delivered"}>
+                    Out for delivery
+                  </option>
+                  <option value="Delivered">Delivered</option>
+                </select>
+              )}
 
-              {/* Status dropdown with disabled invalid options */}
-              <select onChange={(event) => statusHandler(event, order._id)} value={order.status}>
-                <option value="Food Processing" disabled={order.status === "Out for delivery" || order.status === "Delivered"}>
-                  Food Processing
-                </option>
-                <option value="Out for delivery" disabled={order.status === "Delivered"}>
-                  Out for delivery
-                </option>
-                <option value="Delivered">Delivered</option>
-              </select>
-
-              {/* Show the customer's rating if available */}
               {order.rating > 0 && (
                 <div className="order-rating">
                   <p>Customer Rating:</p>

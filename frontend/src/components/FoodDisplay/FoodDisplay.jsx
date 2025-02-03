@@ -91,6 +91,9 @@ const FoodDisplay = ({ category, isCategorySet, setCatset }) => {
     setResults(paginatedData);
     console.log(searchResults)
   }, [page, filteredResults]);
+  useEffect(()=>{
+    console.log(searchResults)
+  },[searchResults])
 
   return (
     <>
@@ -115,21 +118,28 @@ const FoodDisplay = ({ category, isCategorySet, setCatset }) => {
           <Grid2 container spacing={7}>
             {
               searchResults.map((item, index) => (
-                <Grid2 sx={{ cursor: 'pointer',bgcolor:'#8ea484',borderRadius:'10px' }} size={{ xs: 12, sm: 6, md: 4 }} key={index}>
-                  <Paper elevation={3} sx={{ p: 2,borderRadius:'10px' }}>
+                <Grid2 sx={{ cursor: 'pointer', bgcolor: '#8ea484', borderRadius: '10px' }} size={{ xs: 12, sm: 6, md: 4 }} key={index}>
+                  <Paper elevation={3} sx={{height:'100%', p: 2, borderRadius: '10px' }}>
                     <Container onClick={() => { buyPageHandler(item) }} sx={{ padding: 0 }}>
-                      <Box>
-                        <img style={{ borderRadius: '5px', width: '100%' }} src={item.image} alt={item.name}></img>
+                      <Box sx={{display:'flex',justifyContent:'center'}}>
+                        <img style={{ maxWidth: '50%', borderRadius: '5px', width: '100%' }} src={item.image} alt={item.name}></img>
                       </Box>
                       <Box>
-                        <Typography style={{ fontFamily: 'Outfit', fontWeight: 'semibold' }} variant='h5'>
+                        {/* <Typography style={{ fontFamily: 'Outfit', fontWeight: 'semibold' }} variant='h5'>
+                          {item.name}
+                        </Typography> */}
+                        <Typography
+                          style={{ fontFamily: 'Outfit', fontWeight: 'semibold', whiteSpace: 'normal', maxWidth: '150px' }}
+                          variant='h5'
+                        >
                           {item.name}
                         </Typography>
+
                       </Box>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Typography>
+                        <Typography sx={{ textAlign: 'center' }}>
                           {item.units > 0 ?
-                            item.units : "Not available"
+                            `available: ${item.units}` : "Not available"
                           }
                           {/* ₹{Math.min(...item.prices.map(p => p.price))} */}
                           {/* {item.prices.length > 0
@@ -164,7 +174,7 @@ const FoodDisplay = ({ category, isCategorySet, setCatset }) => {
             }
           </Grid2>
         </Box>
-        <Pagination onChange={handleChange} variant="outlined" shape="rounded" sx={{ marginTop: 2, display: 'flex', justifyContent: 'center' }} count={totalPages} color='primary' />
+        <Pagination onChange={handleChange} variant="outlined" shape="rounded" sx={{ marginTop: 9, display: 'flex', justifyContent: 'center' }} count={totalPages} color='primary' />
       </Container>
     </>
   )

@@ -21,6 +21,14 @@
     align-items: start;
     gap: 20px;
 }
+.footer-brand {
+    font-size: 32px; /* Similar size as the logo */
+    font-weight: 700; /* Bold for emphasis */
+    color: #cbe7bf; /* Bright color (adjust as needed) */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
 .footer-content-left li, .footer-content-right li, .footer-content-center li {
     list-style: none;
     margin-bottom: 10px;

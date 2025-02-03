@@ -136,7 +136,7 @@ const placeOrder = async (req, res) => {
             units: units,
             amount: req.body.amount,
             address: req.body.address,
-            status: "Food Processing",
+            status: "Waiting for farmer's acceptance",
             date: new Date(),
             payment: false
         }).save()

@@ -7,13 +7,6 @@ const foodSchema = new mongoose.Schema({
     image: { type: String, required: true },
     category: { type: String, required: true },
     marketPrice:{type:Number,required:true,default:100}
-    // prices: [
-    //     {
-    //         units: { type: Number, required: true, default: 0 },
-    //         price: { type: Number, required: true },
-    //         soldBy: { type: mongoose.Schema.Types.ObjectId, ref: "Farmer", required: true }
-    //     }
-    // ]
 });
 
 const foodModel = mongoose.models.food || mongoose.model("food", foodSchema)

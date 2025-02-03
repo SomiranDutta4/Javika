@@ -81,7 +81,7 @@ const addFood = async (req, res) => {
             food = new foodModel({ name, category });
             await food.save();
         }
-        food.units += units
+        food.units += Number(units)
         food.save()
 
         // Check if a listing already exists for this farmer and food
@@ -232,17 +232,6 @@ const removeFood = async (req, res) => {
     try {
         const id = req.body.id;
         const farmerId = req.body.farmer._id;
-
-        // Find the food item by ID
-
-        // Find the listing and set units to zero
-        // const listing = await listingModel.findOne({ foodId: id, farmerId });
-
-        // if (!listing) {
-        //     return res.status(404).json({ success: false, message: "Listing not found for this farmer." });
-        // }
-
-        // listing.units = 0; 
         const listing = await listingModel.findOne({ foodId: id, farmerId });
 
         if (!listing) {
@@ -264,7 +253,7 @@ const removeFood = async (req, res) => {
         // }
         // await listing.save();
 
-        // return res.status(200).json({ success: true, message: "Listing updated, units set to zero." });
+        return res.status(200).json({ success: true, message: "Listing updated, units set to zero." });
 
     } catch (error) {
         console.error(error);

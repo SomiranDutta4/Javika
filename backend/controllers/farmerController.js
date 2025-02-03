@@ -37,7 +37,7 @@ const createFarmer = async function(req, res) {
             name,
             email,
             password: hashedPassword,
-            farmerId:1000,
+            farmerId:1003,
             aadhaar,
             location,
             panNumber

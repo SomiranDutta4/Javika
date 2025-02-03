@@ -20,6 +20,9 @@
     background-color: #e2e2e2;
     border: none;
 }
+.items-sss{
+    text-align: center;
+}
 .cart-items-item .cross{
     cursor: pointer;
 }

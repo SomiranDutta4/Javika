@@ -40,8 +40,11 @@ const List = ({ url }) => {
     // setList((prevList) => prevList.filter(item => item.foodId._id !== foodId));
 
     if (response.data.success || response.status == 200) {
-      // setList(response.data.newProducts)
+      await fetchList();
+      // setTimeout(() => {
+      // }, 500);
       toast.success(response.data.message);
+      // window.location.reload(); 
     } else {
       toast.error('Error');
     }
