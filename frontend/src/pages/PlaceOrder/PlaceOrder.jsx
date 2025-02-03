@@ -110,7 +110,7 @@ const PlaceOrder = () => {
               <b>${totalPrice === 0 ? 0 : totalPrice + 2}</b>
             </div>
           </div>
-          <button onClick={proceedToOrder}>CONFIRM ORDER</button>
+          <button style={{backgroundColor:'#232a1c',color:'#eef5eb'}} onClick={proceedToOrder}>CONFIRM ORDER</button>
         </div>
       </div>
     </div>

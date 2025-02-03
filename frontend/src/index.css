@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: 0;
@@ -8,26 +8,39 @@
   scroll-behavior: smooth;
 }
 
-body{
-  background-color: var(--body-color);
+body {
+
+  background-color: #eef5eb;
+  /* Light green from your palette */
+  min-height: 100vh;
+  font-family: 'Outfit', sans-serif;
+  color: #2A3825;
+  /* Dark green text for contrast */
+  margin: 0;
+  padding: 0;
+
+
+
+
   min-height: 100vh;
 }
 
-a{
+a {
   text-decoration: none;
   color: inherit;
 }
 
-.app{
-  width: 80%;
+.app {
+  width: 85%;
   margin: auto;
 }
 
 @keyframes fadeIn {
-  0%{
+  0% {
     opacity: 0;
   }
-  100%{
+
+  100% {
     opacity: 1;
   }
 }

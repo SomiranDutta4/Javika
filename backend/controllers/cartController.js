@@ -170,12 +170,11 @@ const removeCart = async (req, res) => {
         console.log(error)
     }
 }
-
-// fetch user cart data
+// fetch user cart datae
 const getCart = async (req, res) => {
-    console.log(req.body)
+    console.log(req.body.user._id)
     try {
-        let userData = await userModel.findById(req.body._id)
+        let userData = await userModel.findById(req.body.user._id)
             .populate({
                 path: 'cartData.listing',  // Populate listing inside cartData
                 populate: {
@@ -183,7 +182,7 @@ const getCart = async (req, res) => {
                     model: 'food'   // Ensure it references the correct model name
                 }
             });
-        let cart = await userData.cartData;
+        let cart = userData.cartData;
         res.json({ success: true, cart })
     } catch (error) {
         console.log(error);

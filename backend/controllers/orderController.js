@@ -286,7 +286,7 @@ const listOrders = async (req, res) => {
             return res.status(400).json({ success: false, message: "Farmer ID is required" });
         }
 
-        const orders = await orderModel.find({ farmerId });
+        const orders = await orderModel.find({ farmerId }).sort({ createdAt: -1 }); // Sort by createdAt (newest first)
 
         res.json({ success: true, data: orders });
     } catch (error) {
@@ -294,6 +294,7 @@ const listOrders = async (req, res) => {
         res.status(500).json({ success: false, message: "Error fetching orders" });
     }
 };
+
 
 // api for updating order status
 const updateStatus = async (req, res) => {
@@ -305,6 +306,45 @@ const updateStatus = async (req, res) => {
         res.json({ success: false, message: "Error" })
     }
 }
+const rateOrder = async (req, res) => {
+    try {
+        const { orderId, rating } = req.body;
+
+        // Find the order by ID and populate the item field
+        const order = await orderModel.findById(orderId).populate("item");
+        if (!order) {
+            return res.status(404).json({ success: false, message: "Order not found" });
+        }
+
+        if (order.status !== "Delivered") {
+            return res.status(400).json({ success: false, message: "Only delivered orders can be rated." });
+        }
+
+        // Update the order rating
+        order.rating = rating;
+        await order.save();
+
+        // Find the corresponding listing based on foodId and farmerId
+        const listing = await listingModel.findOne({ foodId: order.item._id, farmerId: order.farmerId });
+        if (!listing) {
+            return res.status(404).json({ success: false, message: "Listing not found for this order." });
+        }
+
+        // Calculate the new rating
+        const newListingRating = (listing.ratings * listing.ratedBy + rating) / (listing.ratedBy + 1);
+
+        // Update listing ratings and increment ratedBy
+        listing.ratings = newListingRating;
+        listing.ratedBy += 1;
+        await listing.save();
+
+        res.json({ success: true, message: "Rating submitted successfully", newListingRating });
+
+    } catch (error) {
+        console.error("Error updating rating:", error);
+        res.status(500).json({ success: false, message: "Error submitting rating" });
+    }
+}
 
 
-export { placeOrder, verifyOrder, userOrders, listOrders, updateStatus }
+export { rateOrder, placeOrder, verifyOrder, userOrders, listOrders, updateStatus }

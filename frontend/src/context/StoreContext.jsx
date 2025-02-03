@@ -66,8 +66,9 @@ const StoreContextProvider = (props) => {
 
     const fetchCart = async () => {
         const newUrl = url + '/api/cart/get';
-        const response = await axios.post(newUrl, user);
-        if (response.status === 200) {
+        const response = await axios.post(newUrl, {user:user});
+        console.log(response.data)
+        if (response.status === 200||response.success) {
             setCartItems(response.data.cart)
         }
         console.log(response.data.cart)

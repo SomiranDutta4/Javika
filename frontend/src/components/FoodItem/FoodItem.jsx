@@ -13,7 +13,7 @@ import axios from 'axios'
 
 
 function FoodItem() {
-  const { cartItems, addToCart, removeFromCart, foodItem, setFoodItem, url, user } = useContext(StoreContext);
+  const { cartItems, addToCart, setBuyPage, foodItem, setFoodItem, url, user } = useContext(StoreContext);
 
   // const { } = useContext(StoreContext);
   // const [count, setCount] = useState(10);

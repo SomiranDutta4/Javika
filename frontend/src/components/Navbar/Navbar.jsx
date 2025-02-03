@@ -83,7 +83,7 @@ const Navbar = ({ setShowLogin, setShowLoginSeller }) => {
         {!(user) ? <button className='signbutton' onClick={() => setShowLogin(true)}>sign in</button>
           : <div className='navbar-profile'>
             <img src={assets.profile_icon} className='white-filter' alt="" />
-            <ul className="nav-profile-dropdown">
+            <ul style={{border:'1px solid #6c8164',backgroundColor:'#eef5eb'}}  className="nav-profile-dropdown">
               <li onClick={() => navigate('/myorders')}><img src={assets.bag_icon} alt="" /><p>Orders</p></li>
               <hr />
               <li onClick={logout}><img src={assets.logout_icon} alt="" /><p>Logout</p></li>

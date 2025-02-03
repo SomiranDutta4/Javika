@@ -1,3 +1,4 @@
+// the jsx:
 import React, { useContext, useEffect, useState } from 'react'
 import Container from '@mui/material/Container';
 import { Box, Button, Drawer, Grid2, MenuItem, Pagination, Paper, Stack, Typography } from '@mui/material';
@@ -114,8 +115,8 @@ const FoodDisplay = ({ category, isCategorySet, setCatset }) => {
           <Grid2 container spacing={7}>
             {
               searchResults.map((item, index) => (
-                <Grid2 sx={{ cursor: 'pointer' }} size={{ xs: 12, sm: 6, md: 4 }} key={index}>
-                  <Paper elevation={3} sx={{ p: 2 }}>
+                <Grid2 sx={{ cursor: 'pointer',bgcolor:'#8ea484',borderRadius:'10px' }} size={{ xs: 12, sm: 6, md: 4 }} key={index}>
+                  <Paper elevation={3} sx={{ p: 2,borderRadius:'10px' }}>
                     <Container onClick={() => { buyPageHandler(item) }} sx={{ padding: 0 }}>
                       <Box>
                         <img style={{ borderRadius: '5px', width: '100%' }} src={item.image} alt={item.name}></img>
@@ -132,7 +133,7 @@ const FoodDisplay = ({ category, isCategorySet, setCatset }) => {
                           }
                           {/* ₹{Math.min(...item.prices.map(p => p.price))} */}
                           {/* {item.prices.length > 0
-                            ? `₹${Math.min(...item.prices.map(p => p.price))}`
+                            ? ₹${Math.min(...item.prices.map(p => p.price))}
                             : "Not Available"}
 
                           ₹{item.price} */}

@@ -5,7 +5,7 @@ import { assets } from '../../assets/assets'
 
 const Footer = () => {
   return (
-    <div className='footer' id='footer'>
+    <div style={{backgroundColor:'#232a1c',color:'#eef5eb'}} className='footer' id='footer'>
       <div className="footer-content">
         <div className="footer-content-left">
             <img className='tomatologofooter' src={assets.logo} alt="" />

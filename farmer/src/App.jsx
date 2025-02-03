@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { StoreContext } from './context/StoreContext'
 import LoginPopup from './pages/Login/LoginPopup'
 import { useEffect } from 'react'
+import Analytics from './pages/Analytics/Analytics'
 
 const App = () => {
   const { isAuth, setFarmer,setAuth } = useContext(StoreContext)
@@ -36,6 +37,7 @@ const App = () => {
             <Route path="/add" element={<Add url={url} />} />
             <Route path="/list" element={<List url={url} />} />
             <Route path="/orders" element={<Orders url={url} />} />
+            <Route path='/analytics' element={<Analytics></Analytics>}></Route>
           </Routes>
         </div>
       </div>

@@ -24,6 +24,7 @@ const Cart = () => {
   useEffect(() => {
     fetchCart()
   }, [user])
+  
   useEffect(() => {
     let total = 0;
     // Object.entries(cartItems).forEach(([id, item]) => {
@@ -34,6 +35,7 @@ const Cart = () => {
     total = getTotalCartAmount()
     // Set the total amount
     setTotalAmt(total);
+    console.log(cartItems)
   }, [cartItems])
 
   return (
@@ -71,9 +73,9 @@ const Cart = () => {
         {Object.entries(cartItems).map(([key, item], index) => {
           if (item?.units > 0) {
             return (
-              <div key={key}>
-                <div className='cart-items-title cart-items-item'>
-                  <img src={item.listing.foodId.image} alt={item.listing.foodId.name} />
+              <div style={{backgroundColor:'#768f6b',borderRadius:'10px'}} key={key}>
+                <div style={{padding:'10px 5px 10px 5px', color:'#eef5eb',borderRadius:'10px'}} className='cart-items-title cart-items-item'>
+                  <img src={item.listing.foodId.image} />
                   <p>{item.listing.foodId.name}</p>
                   <p>${item.listing.price}</p>
                   <p>{item.units}</p>
@@ -107,7 +109,7 @@ const Cart = () => {
               <b>${totalAmt + deliveryCharges}</b>
             </div>
           </div>
-          <button onClick={() => navigate('/order')}>PROCEED TO CHECKOUT</button>
+          <button style={{backgroundColor:'#232a1c',color:'#cbe7bf'}} onClick={() => navigate('/order')}>PROCEED TO CHECKOUT</button>
         </div>
       </div>
     </div>
