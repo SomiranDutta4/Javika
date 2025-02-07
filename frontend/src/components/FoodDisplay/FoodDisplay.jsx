@@ -100,7 +100,7 @@ const FoodDisplay = ({ category, isCategorySet, setCatset }) => {
       <Container maxWidth="100%">
         <p style={{ fontFamily: 'Outfit', fontWeight: 'semibold', fontWeight: 500, fontSize: '2rem' }}>Search results</p>
         <Container sx={{ my: 1.5 }}>
-          <Stack direction='row' spacing={2}>
+          {/* <Stack direction='row' spacing={2}>
             <MenuItem onClick={() => { setDrawerOpen(true) }} sx={{ display: 'flex', justifyContent: 'space-around' }}>
               <Button>Filter</Button>
               <FilterListIcon />
@@ -112,7 +112,7 @@ const FoodDisplay = ({ category, isCategorySet, setCatset }) => {
               <Typography>Sort</Typography>
               <SortIcon />
             </MenuItem>
-          </Stack>
+          </Stack> */}
         </Container>
         <Box>
           <Grid2 container spacing={7}>

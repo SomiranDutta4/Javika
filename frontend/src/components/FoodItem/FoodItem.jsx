@@ -70,8 +70,8 @@ function FoodItem() {
   };
 
   useEffect(() => {
-    console.log(farmers);
-  }, [farmers]);
+    console.log(foodItem);
+  }, [foodItem]);
 
   return (
     <Container maxWidth="lg">
@@ -85,7 +85,11 @@ function FoodItem() {
       <Grid container spacing={4}>
         {/* Left Side - Product Details */}
         <Grid item xs={12} md={6}>
-          <Paper sx={{ p: 3, borderRadius: '10px', backgroundColor: '#f9f9f9' }}>
+          <Paper sx={{ p: 3, borderRadius: '10px', backgroundColor: '#ffffff' }}>
+            <Box>
+              <img style={{maxHeight:'100px'}} src={foodItem.image}>
+              </img>
+            </Box>
             <Typography variant="subtitle1" color="textSecondary">{foodItem.category}</Typography>
             <Typography variant="h4" sx={{ fontWeight: '600', mb: 1 }}>{foodItem.name}</Typography>
             <Divider sx={{ my: 2 }} />

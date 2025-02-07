@@ -7,7 +7,9 @@ export const StoreContext = createContext(null)
 const StoreContextProvider = (props) => {
 
     // const [cartItems, setCartItems] = useState({});
-    const url = process.env.VITE_APP_BACKEND_URL
+    const url = 'https://startup-ps-spirint.onrender.com'
+    // let url = 'http://localhost:4000';
+
     // const [token,setToken] = useState("")
     // const [food_list,setFoodList] = useState([])
     // const [foodItem,setFoodItem]=useState({})
