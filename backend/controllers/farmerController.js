@@ -13,9 +13,7 @@ const findAllFood = async function (req, res) {
 
 
 import bcrypt from "bcrypt";
-// import { name } from "@adminjs/express";
 
-// Controller function to create a new farmer
 const createFarmer = async function(req, res) {
     const { name, email, password, aadhaar, location, panNumber } = req.body;
     try {
