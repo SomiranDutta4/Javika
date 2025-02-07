@@ -19,7 +19,7 @@ foodRouter.post("/add", addFood)
 foodRouter.post("/getone", findOneFood)
 foodRouter.get("/list", listFood)
 foodRouter.post("/remove", removeFood);
-
+foodRouter.get
 
 
 
